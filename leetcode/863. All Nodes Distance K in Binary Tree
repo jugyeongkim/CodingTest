@@ -1,0 +1,32 @@
+# 스스로 해결 못하고 솔루션 보고 작성했습니다-> 추후 복습을 통해 스스로 작성한 코드 올려보겠습니다.
+def distanceK(self, root, target, K):
+        """
+        :type root: TreeNode
+        :type target: TreeNode
+        :type K: int
+        :rtype: List[int]
+        """
+        graph = collections.defaultdict(list)
+        def dfs(parent,child):
+            if child is None: return
+            if parent and child:
+                graph[child.val].append(parent.val)
+                graph[parent.val].append(child.val)
+            dfs(child, child.left)
+            dfs(child, child.right)
+            return
+        
+        dfs(None,root)
+        
+        queue = collections.deque([target.val])
+        visited=set()
+        visited.add(target.val)
+        while K:
+            for i in range(len(queue)):
+                parent=queue.popleft()
+                visited.add(parent)
+                for child in graph[parent]:
+                    if child not in visited:
+                        queue.append(child)
+            K-=1
+        return list(queue)
