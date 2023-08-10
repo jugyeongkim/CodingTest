@@ -1,0 +1,68 @@
+from itertools import combinations
+class Solution(object):
+    def numTeams(self, rating):
+        """
+        :type rating: List[int]
+        :rtype: int
+        """
+        n=len(rating)
+        lsmall=[0 for _ in range(n)]
+        rlarge=[0 for _ in range(n)]
+        llarge=[0 for _ in range(n)]
+        rsmall=[0 for _ in range(n)]
+        #lsmall
+        for i in range(len(rating)):
+            if i==0:
+                continue
+            else:
+                cnt=0
+                for j in range(i):
+                    if rating[i]>rating[j]:
+                        cnt+=1
+                lsmall[i]=cnt
+        
+        #rlarge
+        for i in range(len(rating)):
+            if i==len(rating)-1:
+                continue
+            else:
+                cnt=0
+                for j in range(i+1,len(rating)):
+                    if rating[i]<rating[j]:
+                        cnt+=1
+                rlarge[i]=cnt
+
+        #llarge
+        for i in range(len(rating)):
+            if i==0:
+                continue
+            else:
+                cnt=0
+                for j in range(i):
+                    if rating[i]<rating[j]:
+                        cnt+=1
+                llarge[i]=cnt
+        
+        #rsmall
+        for i in range(len(rating)):
+            if i==len(rating)-1:
+                continue
+            else:
+                cnt=0
+                for j in range(i+1,len(rating)):
+                    if rating[i]>rating[j]:
+                        cnt+=1
+                rsmall[i]=cnt
+        
+        #print(lsmall,rlarge)
+        #print(rsmall,llarge)
+        ans=0
+        for a,b in zip(lsmall,rlarge):
+            ans+=(a*b)
+        for c,d in zip(rsmall,llarge):
+            ans+=(c*d)
+        return ans
+
+            
+        
+
