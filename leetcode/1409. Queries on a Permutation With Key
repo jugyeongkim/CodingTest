@@ -1,0 +1,17 @@
+class Solution(object):
+    def processQueries(self, queries, m):
+        """
+        :type queries: List[int]
+        :type m: int
+        :rtype: List[int]
+        """
+        P=[x for x in range(1,m+1)]
+        ans=[]
+        newP=[]
+        for i in queries:
+            for j in range(len(P)):
+                if i==P[j]:
+                    ans.append(j)
+                    newP=[i]+P[:j]+P[j+1:]
+                    P=newP[:]
+        return ans
