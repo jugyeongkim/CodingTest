@@ -1,0 +1,26 @@
+from collections import defaultdict
+class Solution:
+    def dfs(self, graph, visited, curNode, preNode):
+        if visited[curNode] == 1:
+            return True
+        else:
+            visited[curNode] = 1
+            nodes = graph[curNode]
+            for node in nodes:
+                if preNode != node:
+                    if self.dfs(graph, visited, node, curNode):
+                        return True
+            return False
+    
+    def findRedundantConnection(self, edges):
+        graph=defaultdict(list)
+        result = [0, 0]
+        for edge in edges:
+            graph[edge[0]].append(edge[1])
+            graph[edge[1]].append(edge[0])
+            
+            visited = [0] * (len(edges) + 1)
+            if self.dfs(graph, visited, edge[0], 0):
+                return [edge[0], edge[1]]
+        
+        return result
