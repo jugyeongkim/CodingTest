@@ -22,5 +22,4 @@ class Solution:
             visited = [0] * (len(edges) + 1)
             if self.dfs(graph, visited, edge[0], 0):
                 return [edge[0], edge[1]]
-        
-        return result
+
