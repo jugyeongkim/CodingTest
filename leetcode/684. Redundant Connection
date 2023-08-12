@@ -14,7 +14,6 @@ class Solution:
     
     def findRedundantConnection(self, edges):
         graph=defaultdict(list)
-        result = [0, 0]
         for edge in edges:
             graph[edge[0]].append(edge[1])
             graph[edge[1]].append(edge[0])
