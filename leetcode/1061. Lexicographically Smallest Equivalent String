@@ -1,23 +1,32 @@
+from collections import defaultdict
 class Solution(object):
     def smallestEquivalentString(self, s1, s2, baseStr):
-        p = list(range(26))
-
-        def find(x):
-            if p[x] != x:
-                p[x] = find(p[x])
-            return p[x]
-
-        for i in range(len(s1)):
-            a, b = ord(s1[i]) - ord('a'), ord(s2[i]) - ord('a')
-            pa, pb = find(a), find(b)
-            if pa < pb:
-                p[pb] = pa
-            else:
-                p[pa] = pb
-
-        res = []
-        for a in baseStr:
-            a = ord(a) - ord('a')
-            res.append(chr(find(a) + ord('a')))
-        return ''.join(res)
+        """
+        :type s1: str
+        :type s2: str
+        :type baseStr: str
+        :rtype: str
+        """
+        par={chr(a):chr(a) for a in range(97,123)}
         
+        def find(u):
+            p=par[u]
+            while p!=par[p]:
+                par[p]=par[par[p]]
+                p=par[p]
+            return p
+
+        def union(u,v):
+            p1,p2=find(u),find(v)
+            if p1<p2:
+                par[p2]=p1
+            else:
+                par[p1]=p2
+            
+        for c1,c2 in zip(s1,s2):
+            if find(c1)!=find(c2):
+                union(c1,c2)
+        ans=''
+        for c in baseStr:
+            ans+=find(c)
+        return ans
