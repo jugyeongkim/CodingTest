@@ -1,0 +1,57 @@
+from collections import deque
+n,m=map(int,input().split())
+paper=[]
+for _ in range(n):
+    paper.append(list(map(int,input().split())))
+dx=[0,0,1,-1]
+dy=[1,-1,0,0]
+arr = [[0 for _ in range(m)] for _ in range(n)]
+def find():
+    visited = [[0 for _ in range(m)] for _ in range(n)]
+    q=deque()
+    q.append((0,0))
+    while q:
+        nowx,nowy=q.popleft()
+        visited[nowx][nowy]=1
+        arr[nowx][nowy] = 1
+        for i in range(4):
+            nx=nowx+dx[i]
+            ny=nowy+dy[i]
+            if nx<0 or ny<0 or nx>=n or ny>=m:
+                continue
+            if paper[nx][ny]!=1 and visited[nx][ny]==0:
+                q.append((nx,ny))
+                visited[nx][ny]=1
+                arr[nx][ny]=1
+ans=0
+
+while(1):
+    find()
+
+    flag = 0
+    for i in range(n):
+        for j in range(m):
+            if paper[i][j]==1:
+                cnt=0
+                for k in range(4):
+                    ni=i+dx[k]
+                    nj=j+dy[k]
+                    if ni<0 or nj<0 or ni>=n or nj>=m:
+                        continue
+                    if arr[ni][nj]==1:
+                        cnt+=1
+                if cnt>=2:
+                    flag = 1
+                    arr[i][j]=2
+
+    if flag==1:
+        ans+=1
+        for i in range(n):
+            for j in range(m):
+                if arr[i][j]==2:
+                    arr[i][j]=1
+                    paper[i][j]=0
+    else:
+        break
+
+print(ans)
