@@ -1,0 +1,40 @@
+from collections import deque
+n,m,a,b,k=map(int,input().split())#5 5 2 2 3
+route=[[0 for _ in range(m+1)] for _ in range(n+1)]
+visited=[[0 for _ in range(m+1)] for _ in range(n+1)]
+for _ in range(k):
+    s,e=map(int,input().split())
+    route[s][e]=1
+dx=[-1,1,0,0]
+dy=[0,0,-1,1]
+
+sx,sy=map(int,input().split())
+ex,ey=map(int,input().split())
+
+def cango(startx,starty):
+    if startx<1 or starty<1 or startx+a-1>n or starty+b-1>m:
+        return False
+    for i in range(a):
+        for j in range(b):
+            if route[startx+i][starty+j]==1:
+                return False
+    return True
+
+def bfs():
+    q=deque()
+    q.append((sx,sy,0))
+    while q:
+        nowx,nowy,distance=q.popleft()
+        visited[nowx][nowy] = 1
+        if nowx==ex and nowy==ey:
+            return distance
+        for i in range(4):
+            nx=nowx+dx[i]
+            ny=nowy+dy[i]
+            if cango(nx,ny) and visited[nx][ny]==0:
+                q.append((nx,ny,distance+1))
+                visited[nx][ny]=1
+    return -1
+
+answer=bfs()
+print(answer)
