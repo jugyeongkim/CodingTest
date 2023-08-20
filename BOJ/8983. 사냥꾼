@@ -1,0 +1,115 @@
+#100점
+import sys
+input=sys.stdin.readline
+(m,n,l)=map(int,input().split())
+point=list(map(int,input().split()))
+animal=[]
+point.sort()
+ans=0
+for _ in range(n):
+    x,y=map(int,input().split())
+    animal.append((x,y))
+    start,end=0,len(point)-1
+    mid=0
+    while start<end:
+        mid=(start+end)//2
+        if point[mid]<x:
+            start=mid+1
+        elif point[mid]>x:
+            end=mid-1
+        else:
+            start=mid
+            break
+    if abs(point[start]-x)+y<=l:
+        ans+=1
+    elif start-1>=0 and abs(point[start-1]-x)+y<=l:
+        ans+=1
+    elif start+1<len(point) and abs(point[start+1]-x)+y<=l:
+        ans+=1
+print(ans)
+
+
+
+
+
+
+
+
+#60점
+# import sys
+# input=sys.stdin.readline
+# m,n,l=map(int,input().split())
+# point=list(map(int,input().split()))
+# animal=[]
+# point.sort()
+# ans=0
+# for _ in range(n):
+#     x,y=map(int,input().split())
+#     animal.append((x,y))
+#     closex = -1
+#     for j in range(len(point)):
+#         if j==0 and x<point[j]:
+#             closex=point[j]
+#             break
+#         elif x<point[j]:
+#             if abs(point[j]-x)<abs(point[j-1]-x):
+#                 closex=point[j]
+#             else:
+#                 closex=point[j-1]
+#             break
+#         elif j==len(point)-1:
+#             closex=point[j]
+#             break
+#     if abs(x-closex)+y<=l:
+#         ans+=1
+# print(ans)
+
+
+
+
+
+#23점
+# from collections import deque
+# m,n,l=map(int,input().split())#사대 수, 동물 수, 사정거리
+#
+# dx=[-1,1,0,0]
+# dy=[0,0,-1,1]
+#
+# point=list(map(int,input().split()))
+# total=[[0 for _ in range(l+max(point)+1)]for _ in range(l+1)]
+# visited=[[0 for _ in range(l+max(point)+1)]for _ in range(l+1)]
+#
+#
+# for _ in range(n):
+#     x,y=map(int,input().split())
+#     if x < 1 or y < 1 or y > l or x > l + max(point):
+#         continue
+#     total[y][x]=1
+#
+#
+# def bfs(sx,sy):
+#     visited = [[0 for _ in range(l + max(point) + 1)] for _ in range(l + 1)]
+#     ans=0
+#     q=deque()
+#     q.append((sx,sy,0))
+#     while q:
+#         nowx,nowy,leng=q.popleft()
+#         visited[nowx][nowy]=1
+#         if leng+1>l:
+#             continue
+#         for i in range(4):
+#             nx=nowx+dx[i]
+#             ny=nowy+dy[i]
+#             if nx<1 or ny<1 or nx>l or ny>l+max(point):
+#                 continue
+#             if visited[nx][ny]==0:
+#                 if total[nx][ny]==1:
+#                     total[nx][ny]=3
+#                     ans+=1
+#                 q.append((nx,ny,leng+1))
+#                 visited[nx][ny]=1
+#     return ans
+# answer=0
+# for i in point:
+#     answer+=bfs(0,i)
+# print(answer)
