@@ -1,0 +1,21 @@
+from collections import deque
+import sys
+input=sys.stdin.readline
+n,d,k,c=map(int,input().split())
+lst=[]
+q=deque()
+for _ in range(n):
+    num=int(input())
+    lst.append(num)
+
+lst=lst+lst[0:k-1]
+max_val=-1
+for i in lst:
+    q.append(i)
+    if len(q)==k:
+        s=set(q)
+        s.add(c)
+        max_val=max(max_val,len(s))
+        q.popleft()
+print(max_val)
+
