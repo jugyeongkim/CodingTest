@@ -1,0 +1,35 @@
+#1253
+
+
+
+#반례
+#5
+#0 0 1 1 2
+
+n=int(input())
+lst=list(map(int,input().split()))
+lst.sort()
+
+ans=0
+for i in range(len(lst)):
+    lpoint = 0
+    rpoint = len(lst) - 1
+    if lpoint==i:
+        lpoint+=1
+    elif rpoint==i:
+        rpoint-=1
+    while lpoint < rpoint:
+        if lst[lpoint]+lst[rpoint]==lst[i]:
+
+            ans+=1
+            break
+        elif lst[lpoint]+lst[rpoint]>lst[i]:
+            rpoint-=1
+            if rpoint==i:
+                rpoint-=1
+        else:
+            lpoint+=1
+            if lpoint==i:
+                lpoint+=1
+
+print(ans)
