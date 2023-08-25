@@ -1,0 +1,77 @@
+#수정중
+from collections import deque,defaultdict
+n,k=map(int,input().split())#체스판크기, 말의 개수
+#0은 흰색,1은 빨간색,2는 파란색
+chess=[]
+for _ in range(n):
+    tmp=list(map(int,input().split()))
+    chess.append(tmp)
+dir=defaultdict(int)
+now=defaultdict(list)
+axis=defaultdict(tuple)
+for i in range(1,k+1):
+    x,y,d=map(int,input().split())
+    x,y=x-1,y-1
+    dir[i]=d-1
+    now[(x,y)].append(i)
+    axis[i]=(x,y)
+
+dx=[0,0,-1,1]
+dy=[1,-1,0,0]
+
+
+def changedir(dir):
+    if dir==0:
+        dir=1
+    elif dir==1:
+        dir=0
+    elif dir==2:
+        dir=3
+    else:
+        dir=2
+    return dir
+cnt=0
+# print(dir)
+# print("now",now)
+# print("axis",axis)
+while True:
+    cnt+=1
+    for ti in range(1,k+1):
+        tx,ty=axis[ti]
+        nx=tx+dx[dir[ti]]
+        ny=ty+dy[dir[ti]]
+        if nx<0 or ny<0 or nx>=n or ny>=n or chess[nx][ny]==2:#파란색이거나 벗어난 경우
+            newdir=changedir(dir[ti])
+            dir[ti]=newdir
+            nx=tx+dx[dir[ti]]
+            ny=ty+dy[dir[ti]]
+            if nx < 0 or ny < 0 or nx >= n or ny >= n or chess[nx][ny] == 2:
+                continue
+            else:
+                #now
+                now[(tx,ty)].remove(ti)
+                now[(nx,ny)].append(ti)
+                #axis
+                axis[ti]=(nx,ny)
+        elif chess[nx][ny]==0:#흰색이면
+            now[(nx,ny)]=now[(tx,ty)]+now[(nx,ny)]
+            for j in now[(tx,ty)]:
+                axis[j]=(nx,ny)
+                now[(tx,ty)].remove(j)
+        elif chess[nx][ny]==1:#빨간색이면
+            if len(now[(nx,ny)])==0:#없으면
+                now[(nx,ny)]=now[(tx,ty)][::-1]
+                for k in now[(tx,ty)]:
+                    axis[k]=(nx,ny)
+                    now[(tx,ty)].remove(k)
+            else:#있으면
+                now[(nx,ny)]=now[(nx,ny)]+now[(tx,ty)][::-1]
+                for l in now[(tx,ty)]:
+                    axis[l]=(nx,ny)
+                    now[(tx,ty)].remove(l)
+    if cnt>1000:
+        cnt=-1
+        break
+print(cnt)
+
+
