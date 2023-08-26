@@ -1,0 +1,29 @@
+import sys
+input=sys.stdin.readline
+from collections import deque
+r,c=map(int,input().split())
+total=[]
+for _ in range(r):
+    total.append(list(input()))
+dx=[0,0,-1,1]
+dy=[1,-1,0,0]
+max_val=-1
+for i in range(r):
+    for j in range(c):
+        if total[i][j]=='L':
+            q=deque()
+            q.append((i,j,0))
+            visited=[[0 for _ in range(c)] for _ in range(r)]
+            visited[i][j]=1
+            while q:
+                ex,ey,len=q.popleft()
+                max_val=max(max_val,len)
+                for k in range(4):
+                    nx=ex+dx[k]
+                    ny=ey+dy[k]
+                    if nx<0 or ny<0 or nx>=r or ny>=c:
+                        continue
+                    if visited[nx][ny]==0 and total[nx][ny]=='L':
+                        visited[nx][ny]=1
+                        q.append((nx,ny,len+1))
+print(max_val)
