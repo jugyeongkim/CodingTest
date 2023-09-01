@@ -1,0 +1,24 @@
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        now=""
+        ans=[]
+        def check(now,string,left,right):
+            if string=="(":
+                left+=1
+            else:
+                right+=1
+            now+=string
+
+            if len(now)==2*n:
+                ans.append(now)
+                return
+            if left>right and left<n:
+                check(now,"(",left,right)
+                check(now,")",left,right)
+            elif left>right:
+                check(now,")",left,right)
+            else:
+                check(now,"(",left,right)
+        check("","(",0,0)
+        print(ans)
+        return ans
