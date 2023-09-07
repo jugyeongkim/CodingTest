@@ -1,0 +1,18 @@
+from collections import defaultdict
+class Solution:
+    def reorderLogFiles(self, logs: List[str]) -> List[str]:
+        letter=[]
+        digit=[]
+
+        for i in logs:
+            tmp=i.split()
+            if 48<=ord(tmp[1][0])<=57:
+                digit.append(i)
+            else:
+                letter.append(i)
+
+        letter.sort(key=lambda x:(x.split())[0])
+        letter.sort(key=lambda x:(x.split())[1:])
+
+        return letter+digit
+        
