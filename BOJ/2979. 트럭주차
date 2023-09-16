@@ -1,0 +1,13 @@
+a,b,c=map(int,input().split())
+lst=[]
+max_idx=-1
+for _ in range(3):
+    start,end=map(int,input().split())
+    max_idx=max(max_idx,end)
+    lst.append((start,end))
+arr=[0 for _ in range(max_idx+1)]
+for i in lst:
+    for j in range(i[0],i[1]):
+        arr[j]+=1
+
+print(arr.count(1)*a+arr.count(2)*b*2+arr.count(3)*c*3)
