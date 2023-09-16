@@ -1,0 +1,22 @@
+n,k=map(int,input().split())
+country=[]
+for i in range(n):
+    num,gold,silver,bronze=map(int,input().split())
+    country.append((gold,silver,bronze))
+    if k==num:
+        answer=(gold,silver,bronze)
+country.sort(reverse=True)
+rank=1
+if country[0]==answer:
+    print(rank)
+temp=0
+for j in range(1,len(country)):
+    if country[j]!=country[j-1]:
+        rank=rank+temp+1
+        temp=0
+    if country[j]==country[j-1]:
+        temp+=1
+    if country[j]==answer:
+        print(rank)
+        break
+    
