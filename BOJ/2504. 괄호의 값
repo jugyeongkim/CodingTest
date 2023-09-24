@@ -1,0 +1,40 @@
+lst=input()
+stack=[]
+ans=0
+tmp=1
+false=0
+for i in range(len(lst)):
+    if lst[i]=='(':
+        tmp*=2
+        stack.append('(')
+    elif lst[i]=='[':
+        tmp*=3
+        stack.append('[')
+    elif lst[i]==')':
+        if len(stack)==0 or stack[-1]!='(':
+            false=1
+            break
+        if lst[i-1]=='(':
+            ans+=tmp
+            tmp=tmp//2
+            stack.pop()
+        else:
+            tmp=tmp//2
+            stack.pop()
+
+    elif lst[i]==']':
+        if len(stack)==0 or stack[-1] != '[':
+            false = 1
+            break
+        if lst[i-1] == '[':
+            ans += tmp
+            tmp = tmp // 3
+            stack.pop()
+        else:
+            tmp = tmp // 3
+            stack.pop()
+if false==1 or len(stack)>0:
+    print(0)
+else:
+    print(ans)
+
