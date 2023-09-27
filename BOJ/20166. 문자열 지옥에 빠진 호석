@@ -1,0 +1,49 @@
+from collections import defaultdict
+n,m,k=map(int,input().split())
+arr=[]
+for _ in range(n):
+    tmp=list(input())
+    arr.append(tmp)
+dx=[-1,-1,-1,0,0,1,1,1]
+dy=[0,-1,1,-1,1,0,-1,1]
+
+ans=0
+def find_target(tmp, x, y, idx):
+    global ans
+    if idx>=5:
+        return
+
+    dic[tmp]+=1
+
+    for i in range(8):
+        nx = x + dx[i]
+        ny = y + dy[i]
+        if nx < 0:
+            nx = n - 1
+        if ny < 0:
+            ny = m - 1
+        if nx >= n:
+            nx = 0
+        if ny >= m:
+            ny = 0
+
+        find_target(tmp + arr[nx][ny], nx, ny, idx + 1)
+
+    return
+
+
+
+dic=defaultdict(int)
+for i in range(n):
+    for j in range(m):
+        find_target(arr[i][j],i,j,0)
+
+for _ in range(k):
+    ans = 0
+    target = input()
+    print(dic[target])
+
+
+
+
+
