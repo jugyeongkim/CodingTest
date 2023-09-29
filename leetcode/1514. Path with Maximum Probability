@@ -1,0 +1,38 @@
+from collections import defaultdict
+from heapq import heappush,heappop
+class Solution:
+    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start_node: int, end_node: int) -> float:
+        graph=defaultdict(list) #노드,가중치 순
+        for i in range(len(edges)):
+            graph[edges[i][0]].append((edges[i][1],succProb[i]))
+            graph[edges[i][1]].append((edges[i][0],succProb[i]))
+
+        heap=[]
+        heappush(heap,(-1,start_node))
+        visited=set()
+        while heap:
+            prob,now=heappop(heap)
+            if now in visited:
+                continue
+            visited.add(now)
+            if now==end_node:
+                return -prob
+            for i in graph[now]:
+                cost=prob*i[1]
+                heappush(heap,(cost,i[0]))
+        return 0
+                
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
