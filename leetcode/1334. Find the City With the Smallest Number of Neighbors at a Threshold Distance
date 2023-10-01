@@ -1,0 +1,27 @@
+#플로이드 워셜
+from collections import defaultdict
+class Solution:
+    def findTheCity(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
+        arr=[[100001 for _ in range(n)]for _ in range(n)]
+        for e in edges:
+            start,end,val=e[0],e[1],e[2]
+            arr[start][end]=val
+            arr[end][start]=val
+        for k in range(n):
+            for i in range(n):
+                for j in range(n):
+                    arr[i][j]=min(arr[i][j],arr[i][k]+arr[k][j])
+        
+      
+        cnt=[]
+        for i in range(n):
+            tmp=0
+            for j in range(n):
+                if i==j:
+                    continue
+                if arr[i][j]<=distanceThreshold:
+                    tmp+=1
+            cnt.append((tmp,-i))
+        cnt.sort()
+
+        return -cnt[0][1]
