@@ -1,0 +1,14 @@
+x,y,w,s=map(int,input().split())
+INF=int(1e9)
+
+
+if y==0:
+    ans=min(x*w,(x//2)*2*s+(x%2)*w)
+elif x==0:
+    ans=min(y*w,(y//2)*2*s+(y%2)*w)
+else:
+    dia=min(x,y)
+    diff=max(x,y)-min(x,y)
+    ans=min((x+y)*w,dia*s+diff*w,dia*s+(diff//2)*2*s+(diff%2)*w)
+
+print(ans)
