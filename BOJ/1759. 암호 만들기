@@ -1,0 +1,36 @@
+l,c=map(int,input().split())
+lst=list(map(str,input().split()))
+lst.sort()
+yes,no=0,0
+def make_str(idx,arr):
+    global yes,no
+    if len(arr)==l:
+        tmp=''.join(arr)
+        if yes>=1 and no>=2:
+            print(tmp)
+        return
+    if idx>=len(lst):
+        return
+    if lst[idx]=='a' or lst[idx]=='e' or lst[idx]=='o' or lst[idx]=='i' or lst[idx]=='u':
+        yes+=1
+    else:
+        no+=1
+    arr.append(lst[idx])
+    make_str(idx+1,arr)
+    arr.pop()
+    if lst[idx]=='a' or lst[idx]=='e' or lst[idx]=='o' or lst[idx]=='i' or lst[idx]=='u':
+        yes-=1
+    else:
+        no-=1
+    make_str(idx+1,arr)
+
+
+
+
+make_str(0,[])
+
+
+
+
+
+
