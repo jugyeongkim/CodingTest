@@ -1,0 +1,45 @@
+import sys,heapq
+input=sys.stdin.readline
+INF=10000000
+
+n,e=map(int,input().split())
+graph=[[] for _ in range(n+1)]
+
+for _ in range(e):
+    a,b,c=map(int,input().split())
+    graph[a].append((b,c))
+    graph[b].append((a,c))
+
+v1,v2=map(int,input().split())
+def dijkstra(start):
+    dist=[INF for _ in range(n+1)]
+    dist[start]=0
+    q=[]
+    heapq.heappush(q,(0,start))
+    while q:
+        diff,now=heapq.heappop(q)
+        if diff>dist[now]:
+            continue
+        for node,value in graph[now]:
+            if dist[node]>diff+value:
+                dist[node]=diff+value
+                heapq.heappush(q,(dist[node],node))
+    for i in range(n+1):
+        if dist[i]>=INF:
+            dist[i]=-1
+    return dist
+arr=dijkstra(1)
+arr2=dijkstra(v2)
+arr3=dijkstra(v1)
+star=-1
+for i in graph[v1]:
+    if i[0]==v2:
+        star=i[1]
+        break
+if v1==v2:
+    print(0)
+elif arr[v1]==-1 or arr3[v2]==-1 or arr3[n]==-1 or arr2[n]==-1 or arr[v2]==-1 or arr2[v1]==-1:
+    print(-1)
+else:
+    min_value=(min(arr[v1]+arr3[v2]+arr2[n],arr[v2]+arr2[v1]+arr3[n]))
+    print(min_value)
