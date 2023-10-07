@@ -1,0 +1,70 @@
+arr=[]
+for _ in range(4):
+    arr.append(list(input()))
+
+k=int(input())
+
+def change(arr,dir):#반시계
+    if dir==-1:
+        arr=''.join(arr)
+        ary=arr[1:]+arr[0]
+        ary=list(ary)
+        arr=ary
+        return arr
+    elif dir==1:
+        arr=''.join(arr)
+        ary = arr[-1] + arr[0:7]
+        ary=list(ary)
+        arr = ary
+        return arr
+
+
+
+for _ in range(k):
+    num,dir=map(int,input().split())
+    if num==1:
+        if arr[0][2]!=arr[1][6]:
+            if arr[1][2]!=arr[2][6]:
+                if arr[2][2]!=arr[3][6]:
+                    arr[3]=change(arr[3],-dir)
+                arr[2]=change(arr[2],dir)
+            arr[1]=change(arr[1],-dir)
+        arr[0]=change(arr[0],dir)
+    elif num==2:
+        #왼쪽
+        if arr[1][6]!=arr[0][2]:
+            arr[0]=change(arr[0],-dir)
+        if arr[1][2]!=arr[2][6]:
+            if arr[2][2]!=arr[3][6]:
+                arr[3]=change(arr[3],dir)
+            arr[2]=change(arr[2],-dir)
+        arr[1]=change(arr[1],dir)
+    elif num==3:
+        #오른쪽
+        if arr[2][2]!=arr[3][6]:
+            arr[3]=change(arr[3],-dir)
+        if arr[2][6]!=arr[1][2]:
+            if arr[1][6]!=arr[0][2]:
+                arr[0]=change(arr[0],dir)
+            arr[1]=change(arr[1],-dir)
+        arr[2]=change(arr[2],dir)
+
+    else:
+        if arr[3][6]!=arr[2][2]:
+            if arr[2][6]!=arr[1][2]:
+                if arr[1][6]!=arr[0][2]:
+                    arr[0]=change(arr[0],-dir)
+                arr[1]=change(arr[1],dir)
+            arr[2]=change(arr[2],-dir)
+        arr[3]=change(arr[3],dir)
+ans=0
+if arr[0][0]=='1':
+    ans+=1
+if arr[1][0]=='1':
+    ans+=2
+if arr[2][0]=='1':
+    ans+=4
+if arr[3][0]=='1':
+    ans+=8
+print(ans)
+
