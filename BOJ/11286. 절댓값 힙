@@ -1,0 +1,16 @@
+from heapq import heappush,heappop
+import sys
+input=sys.stdin.readline
+n=int(input())
+heap=[]
+for _ in range(n):
+    tmp=int(input())
+    abtmp=abs(tmp)
+    if tmp!=0:#0이 아니라면
+        heappush(heap,(abtmp,tmp))
+    else:
+        if len(heap)==0:
+            print(0)
+        else:
+            abans,ans=heappop(heap)
+            print(ans)
