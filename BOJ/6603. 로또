@@ -1,0 +1,12 @@
+from itertools import combinations
+while True:
+    test=list(map(int,input().split()))
+    if test[0]==0:
+        break
+    n,lst=test[0],test[1:]
+    comb=list(combinations(lst,6))
+    for com in comb:
+        for i in range(len(com)):
+            print(com[i],end=' ')
+        print()
+    print()
