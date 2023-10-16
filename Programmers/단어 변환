@@ -1,0 +1,33 @@
+from collections import deque
+
+
+def check_diff_only(string1, string2):
+    diff = 0
+    for s1, s2 in zip(string1, string2):
+        if s1 != s2:
+            diff += 1
+        if diff >= 2:
+            break
+    if diff == 1:
+        return True
+    else:
+        return False
+
+
+def solution(begin, target, words):
+    answer = 0
+    if target not in words:
+        return answer
+    visited = [0 for _ in range(len(words))]
+    q = deque()
+    answer = 0
+    q.append((begin, answer, visited))
+
+    while q:
+        next_val, temp, visited = q.popleft()
+        if next_val == target:
+            return temp
+        for i in range(len(words)):
+            if visited[i] == 0 and check_diff_only(next_val, words[i]):
+                visited[i] = 1
+                q.append((words[i], temp + 1, visited))
