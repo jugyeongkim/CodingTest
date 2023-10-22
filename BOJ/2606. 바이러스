@@ -1,0 +1,31 @@
+from collections import deque,defaultdict
+def main():
+    cnum=int(input())
+    edge=int(input())
+    graph=defaultdict(list)
+    for i in range(edge):
+        s,e=map(int,input().split())
+        graph[s].append(e)
+        graph[e].append(s)
+    visited=[0 for _ in range(cnum+1)]
+    q=deque()
+    q.append(1)
+    visited[1]=1
+    cnt=0
+    while q:
+        now=q.popleft()
+        for i in graph[now]:
+            if visited[i]==0:
+                visited[i]=1
+                q.append(i)
+                cnt+=1
+    print(cnt)
+
+
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    main()
+
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
