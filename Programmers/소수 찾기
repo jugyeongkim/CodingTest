@@ -20,3 +20,4 @@ def solution(numbers):
                 h.add(val)
 
     return len(h)
+
