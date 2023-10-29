@@ -1,0 +1,64 @@
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+def preorder(root):
+    if root is None:
+        return ""
+
+    ans = "V"
+    if root.left:
+        ans += "L"
+        ans += preorder(root.left)
+        ans += "l"
+
+    if root.right:
+        ans += "R"
+        ans += preorder(root.right)
+        ans += "r"
+
+    ans += "v"
+    return ans
+
+def remove(root):
+    if root is None:
+        return
+
+    if root.left:
+        remove(root.left)
+    if root.right:
+        remove(root.right)
+    del root
+
+if __name__ == "__main__":
+    n, m = map(int, input().split())
+
+    s = set()
+    for k in range(n):
+        a = list(map(int, input().split()))
+        root = Node(a[0])
+
+        for i in range(1, m):
+            cur = root
+            while True:
+                if cur.val > a[i]:
+                    if cur.left is None:
+                        cur.left = Node(a[i])
+                        break
+                    else:
+                        cur = cur.left
+                elif cur.val < a[i]:
+                    if cur.right is None:
+                        cur.right = Node(a[i])
+                        break
+                    else:
+                        cur = cur.right
+                else:
+                    break
+
+        s.add(preorder(root))
+        remove(root)
+
+    print(len(s))
