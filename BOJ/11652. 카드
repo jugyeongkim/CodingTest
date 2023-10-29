@@ -1,0 +1,10 @@
+from collections import defaultdict
+n=int(input())
+dic=defaultdict(int)
+for _ in range(n):
+    temp=int(input())
+    dic[temp]+=1
+
+for k,v in sorted(dic.items(),key=lambda x:(x[1],-x[0]),reverse=True):
+    print(k)
+    break
